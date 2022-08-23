@@ -24,25 +24,34 @@ public class WordleGame {
 		System.out.println("Instructions: a green letter means the letter is in the correct place, red means that letter is not in the word and yellow means it exists in the word but it's current position is incorrect.");
 		System.out.println("Wordle: Type a five letter word");
 		
-	        String answerChosen = ReturnRandomWord();
+	        String word = ReturnRandomWord();
 	        char[] answer = new char[5];
-	        for (int i = 0; i < 5; i++ ) answer[i] = answerChosen.charAt(i);
+	        for (int i = 0; i < 5; i++ ) answer[i] = word.charAt(i);
 	        char[] input = new char[5];        
 	        boolean done = false;
+	        int tries = 0;
 	        
 	        while (!done){
+	        	tries++;
 	            String R1 = s.nextLine().toLowerCase();
 	            while (R1.length() < 5) {
 	                R1 = s.nextLine().toLowerCase();
 	            }
 	            for (int i = 0; i < 5; i++ ) { //puts the inputWord into a char[]
-	                answer[i] = answerChosen.charAt(i);
+	                answer[i] = word.charAt(i);
 	                input[i] = R1.charAt(i);
 	            }
-	            if (PrintWordWithColor(input, answer)) done = true;
+	            if (tries > 6 && !PrintWordWithColor(input, answer)){
+	            	done = true;
+	            	System.out.println("Game over :( the word was " + word);
+	            }
+	            if (PrintWordWithColor(input, answer)) {
+	            	done = true;
+	            	System.out.println("Congratulations, you got the correct answer! To play again, click run!");
+	            }
+	      
 	        }
-
-	        System.out.println("Congratulations, you got the correct answer! To play again, click run!");
+	        
 	    }
 
 	// Print the word with the required colour (correct, incorrect, incorrect position)
