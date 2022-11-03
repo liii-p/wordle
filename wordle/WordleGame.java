@@ -1,10 +1,6 @@
 package wordle;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 public class WordleGame {
@@ -23,8 +19,11 @@ public class WordleGame {
 	public static void main(String[] args) throws FileNotFoundException {
 		System.out.println("Instructions: a green letter means the letter is in the correct place, red means that letter is not in the word and yellow means it exists in the word but it's current position is incorrect.");
 		System.out.println("Wordle: Type a five letter word");
+
+		WordList wordList = new WordList("./wordList.txt");
 		
-	        String word = ReturnRandomWord();
+	        String word = wordList.ReturnRandomWord();
+
 	        char[] answer = new char[5];
 	        for (int i = 0; i < 5; i++ ) answer[i] = word.charAt(i);
 	        char[] input = new char[5];        
@@ -41,18 +40,26 @@ public class WordleGame {
 	                answer[i] = word.charAt(i);
 	                input[i] = R1.charAt(i);
 	            }
-	            if (tries > 6 && !PrintWordWithColor(input, answer)){
+				
+				if (PrintWordWithColor(input, answer)) {
 	            	done = true;
-	            	System.out.println("Game over :( the word was " + word);
-	            }
-	            if (PrintWordWithColor(input, answer)) {
+	            	PrintSuccessMessage();
+	            } else if (tries > 6){
 	            	done = true;
-	            	System.out.println("Congratulations, you got the correct answer! To play again, click run!");
+	            	PrintGameoverMessage(word);
 	            }
-	      
 	        }
-	        
 	    }
+
+		public static void PrintSuccessMessage()
+		{
+			System.out.println("Congratulations, you got the correct answer! To play again, click run!");
+		}
+
+		public static void PrintGameoverMessage(String word)
+		{
+			System.out.println("Game over :( the word was " + word);
+		}
 
 	// Print the word with the required colour (correct, incorrect, incorrect position)
 	public static boolean PrintWordWithColor(char[] inputWord, char[] correctWord) {
@@ -87,34 +94,7 @@ public class WordleGame {
 	}
 	
 
-	public static String ReturnRandomWord() throws FileNotFoundException {
-		Scanner wordList = new Scanner(new File("C:/Users/User/wordList.txt"));
-		
-		// adding wordList to wordData
-			List<String> wordData = new ArrayList<>();
-			
-		// reading the file
-			while (wordList.hasNext()) {
-				// Remove and replace excess characters with empty string
-				wordData.add(wordList.nextLine().replaceAll("[^\\w]", ""));
-				
-				// System.out.println(wordList.nextLine()); Yep - it works!
-			}
-			
-			//Remove empty strings
-			wordData.removeAll(Arrays.asList("", null));
-			
-			// System.out.println(wordData);	
-			
-			 // generating random word selector for the new word
-	        Random random = new Random();
-	        String newWord = wordData.get(random.nextInt(wordData.size())); 
-	        
-	        // checking random word generator works
-//	        System.out.println(newWord);
-	        return newWord;
-
-	}
+	
 
 	}
 
