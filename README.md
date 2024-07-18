@@ -24,6 +24,7 @@ However, I discovered the Eclipse cannot process these colours as is so a plugin
 Other than that, the program takes user input, scans through each letter and compares it to the chosen letter which is extracted from a txt file and chosen at random.
 
 ## TO RUN 
-You must install the following extension in your eclipse workspace in order to run the game properly.
+This project must be opened in Eclipse, a Java IDE, in order to run it. Open the Wordle folder, then click into WordleGame.java and click the run button.
+You must install the following extension in your Eclipse workspace in order to run the game properly.
 https://marketplace.eclipse.org/content/ansi-escape-console
-else eclipse cannot process the ANSI colours.
+else Eclipse cannot process the ANSI colours.
